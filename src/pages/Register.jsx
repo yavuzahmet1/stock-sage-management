@@ -40,8 +40,8 @@ const Register = () => {
   return (
     <Container maxWidth="lg">
       <Grid
-        container
         justifyContent="center"
+        container
         direction="row-reverse"
         rowSpacing={{ sm: 3 }}
         sx={{
@@ -80,7 +80,8 @@ const Register = () => {
             }}
             validationSchema={SignupSchema
             }
-            onSubmit={{
+            onSubmit={(values) => {
+              console.log(values)
             }}
           >
             {({
@@ -141,6 +142,7 @@ const Register = () => {
                   name="password"
                   label="Password"
                   variant="outlined"
+                  type="password"
                   fullWidth
                   value={values.password}
                   onChange={handleChange}
