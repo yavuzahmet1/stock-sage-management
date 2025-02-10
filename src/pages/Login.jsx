@@ -9,6 +9,22 @@ import image from "../assets/hero.png";
 import { Link } from "react-router-dom";
 import AuthHeader from "../components/AuthHeader";
 import AuthImage from "../components/AuthImage";
+import LoginForm from "../components/LoginForm";
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+
+const SignupSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email').required('Required'),
+  password: Yup.string()
+    .min(8, 'Too Short!')
+    .max(50, 'Too Long!')
+    .matches(/[A-Z]/, 'Must contain at least one uppercase letter')
+    .matches(/[a-z]/, 'Must contain at least one lowercase letter')
+    .matches(/\d/, 'Must contain at least one number')
+    .matches(/[!@#$%^&*+=]/, 'Must contain at least one special character')
+    .matches(/^[^\s]+$/, 'Cannot contain spaces')
+    .required('Required')
+});
 
 const Login = () => {
   const theme = useTheme();
@@ -40,7 +56,21 @@ const Login = () => {
           <Typography variant="h4" align="center" mb={4} color="secondary.main">
             SIGN IN
           </Typography>
-
+          <Formik
+            initialValues={{
+              email: "",
+              password: "",
+            }}
+            validationSchema={SignupSchema
+            }
+            // Gerçek uygulamalarda, burada veriyi API'ye gönderebiliriz.
+            onSubmit={(values) => {
+              console.log(values)
+            }}
+            //form render edilir
+            component={(props) =>
+              (<LoginForm {...props} />)}
+          />
           <Box sx={{ textAlign: "center", mt: 2, color: "secondary.main" }}>
             <Link to="/register">
               Don't have an account? Sign Up
