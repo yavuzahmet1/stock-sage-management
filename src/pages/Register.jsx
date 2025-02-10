@@ -5,11 +5,12 @@ import LockIcon from "@mui/icons-material/Lock";
 import image from "../assets/register.jpg";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
-import { Box, Button, TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import AuthHeader from "../components/AuthHeader";
 import AuthImage from "../components/AuthImage";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import RegisterForm from "../components/RegisterForm";
 
 const SignupSchema = Yup.object().shape({
   username: Yup.string()
@@ -80,80 +81,15 @@ const Register = () => {
             }}
             validationSchema={SignupSchema
             }
+            // Gerçek uygulamalarda, burada veriyi API'ye gönderebiliriz.
             onSubmit={(values) => {
               console.log(values)
             }}
-          >
-            {({
-              values,
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              isSubmitting,
-            }) => (
-              <form onSubmit={handleSubmit}>
-                <TextField
-                  name="username"
-                  label="User Name"
-                  variant="outlined"
-                  fullWidth
-                  value={values.username}
-                  onChange={handleChange}
-                  helperText={touched.username && errors.username}
-                  onBlur={handleBlur}
-                  error={touched.username && errors.username}
-                  margin="normal" />
-                <TextField
-                  name="firstName"
-                  label="First Name"
-                  variant="outlined"
-                  fullWidth
-                  value={values.firstName}
-                  onChange={handleChange}
-                  helperText={touched.firstName && errors.firstName}
-                  onBlur={handleBlur}
-                  error={touched.firstName && errors.firstName}
-                  margin="normal" />
-                <TextField
-                  name="lastName"
-                  label="Last Name"
-                  variant="outlined"
-                  fullWidth
-                  value={values.lastName}
-                  onChange={handleChange}
-                  helperText={touched.lastName && errors.lastName}
-                  onBlur={handleBlur}
-                  error={touched.lastName && errors.lastName}
-                  margin="normal" />
-                <TextField
-                  name="email"
-                  label="e-mail"
-                  variant="outlined"
-                  fullWidth
-                  value={values.email}
-                  onChange={handleChange}
-                  helperText={touched.email && errors.email}
-                  onBlur={handleBlur}
-                  error={touched.email && errors.email}
-                  margin="normal" />
-                <TextField
-                  name="password"
-                  label="Password"
-                  variant="outlined"
-                  type="password"
-                  fullWidth
-                  value={values.password}
-                  onChange={handleChange}
-                  helperText={touched.password && errors.password}
-                  onBlur={handleBlur}
-                  error={touched.password && errors.password}
-                  margin="normal" />
-                <Button variant="contained" color="success" type="submit" fullWidth>Sign Up</Button>
-              </form>
-            )}
-          </Formik>
+            //form render edilir
+            component={(props) =>
+              (<RegisterForm {...props} />)}
+          />
+
           <Box sx={{ textAlign: "center", mt: 2, color: "secondary.main" }}>
             <Link to="/">Already have an account? Sign in</Link>
           </Box>
