@@ -87,7 +87,6 @@ const Register = () => {
             }
             // Gerçek uygulamalarda, burada veriyi API'ye gönderebiliriz.
             onSubmit={(values) => {
-              console.log(values);
               register(values)
 
             }}
