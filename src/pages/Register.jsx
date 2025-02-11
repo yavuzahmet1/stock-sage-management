@@ -11,6 +11,7 @@ import AuthImage from "../components/AuthImage";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import RegisterForm from "../components/RegisterForm";
+import useAuthCall from "../hook/useAuthCall";
 
 const SignupSchema = Yup.object().shape({
   username: Yup.string()
@@ -38,6 +39,9 @@ const SignupSchema = Yup.object().shape({
 });
 
 const Register = () => {
+
+  const { register } = useAuthCall()
+
   return (
     <Container maxWidth="lg">
       <Grid
@@ -83,7 +87,9 @@ const Register = () => {
             }
             // Gerçek uygulamalarda, burada veriyi API'ye gönderebiliriz.
             onSubmit={(values) => {
-              console.log(values)
+              console.log(values);
+              register(values)
+
             }}
             //form render edilir
             component={(props) =>
