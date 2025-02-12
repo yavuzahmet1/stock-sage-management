@@ -4,16 +4,18 @@
 // 3 - Custom hook'lar use ile başlamalıdır.
 // 4-JSX döndermez sadece veri veya fonksiyon döner
 import React from 'react'
-import { fetchFail, fetchStart, registerSuccess } from '../features/authSlice'
+import { fetchFail, fetchStart, registerSuccess, logoutSuccess } from '../features/authSlice'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 
 const useAuthCall = () => {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { token } = useSelector(state => state.auth)
 
 
     const register = async (userInfo) => {
@@ -27,6 +29,23 @@ const useAuthCall = () => {
 
             navigate("/stock");
 
+        } catch (error) {
+            dispatch(fetchFail())
+        }
+    }
+
+    const logout = async () => {
+        dispatch(fetchStart())
+        try {
+            const { data } = await axios.get("https://16142.fullstack.clarusway.com/auth/logout", {
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+
+            dispatch(logoutSuccess())
+
+            navigate("/")
 
         } catch (error) {
             dispatch(fetchFail())
@@ -37,7 +56,7 @@ const useAuthCall = () => {
 
 
 
-    return { register }
+    return { register, logout }
 }
 
 export default useAuthCall
