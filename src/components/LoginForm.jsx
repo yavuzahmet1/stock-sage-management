@@ -13,15 +13,15 @@ const LoginForm = ({
     return (
         <form onSubmit={handleSubmit}>
             <TextField
-                name="email"
-                label="e-mail"
+                name="username"
+                label="username"
                 variant="outlined"
                 fullWidth
-                value={values.email}
+                value={values.username}
                 onChange={handleChange}
-                helperText={touched.email && errors.email}
+                helperText={touched.username && errors.username}
                 onBlur={handleBlur}
-                error={touched.email && errors.email}
+                error={touched.username && errors.username}
                 margin="normal" />
             <TextField
                 name="password"

@@ -3,8 +3,7 @@
 // 2 - Mantığı Soyutlar.
 // 3 - Custom hook'lar use ile başlamalıdır.
 // 4-JSX döndermez sadece veri veya fonksiyon döner
-import React from 'react'
-import { fetchFail, fetchStart, registerSuccess, logoutSuccess } from '../features/authSlice'
+import { fetchFail, fetchStart, registerSuccess, logoutSuccess, loginSuccess } from '../features/authSlice'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -52,11 +51,25 @@ const useAuthCall = () => {
         }
     }
 
+    const login = async (userLoginInfo) => {
+        dispatch(fetchStart())
+
+        try {
+            const { data } = await axios.post("https://16142.fullstack.clarusway.com/auth/login", userLoginInfo);
+            console.log("userLoginInfo : ", data);
+            dispatch(loginSuccess(data));
+            navigate("/stock")
+        } catch (error) {
+            dispatch(fetchFail())
+
+        }
+    }
 
 
 
 
-    return { register, logout }
+
+    return { register, logout, login }
 }
 
 export default useAuthCall

@@ -50,6 +50,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import { Button } from '@mui/material';
 import useAuthCall from "../hook/useAuthCall";
 import { useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -261,6 +262,7 @@ export default function MiniDrawer() {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         buraya içerik gelecek
+        <Outlet />
         {/* <Typography sx={{ marginBottom: 2 }}>
           Lorem ipsum dolor sit amet,
         </Typography>

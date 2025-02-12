@@ -14,16 +14,12 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 const SignupSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Required'),
+  username: Yup.string()
+    .min(5, "Kullanıcı adı 5 karakterden az olamaz")
+    .max(50, "Kullanıcı adı 50 karakterden fazla olamaz")
+    .required("Kullanıcı adı zorunludur"),
   password: Yup.string()
-    .min(8, 'Too Short!')
-    .max(50, 'Too Long!')
-    .matches(/[A-Z]/, 'Must contain at least one uppercase letter')
-    .matches(/[a-z]/, 'Must contain at least one lowercase letter')
-    .matches(/\d/, 'Must contain at least one number')
-    .matches(/[!@#$%^&*+=]/, 'Must contain at least one special character')
-    .matches(/^[^\s]+$/, 'Cannot contain spaces')
-    .required('Required')
+    .required("password zorunludur")
 });
 
 const Login = () => {
@@ -58,14 +54,16 @@ const Login = () => {
           </Typography>
           <Formik
             initialValues={{
-              email: "",
+              username: "",
               password: "",
             }}
             validationSchema={SignupSchema
             }
             // Gerçek uygulamalarda, burada veriyi API'ye gönderebiliriz.
             onSubmit={(values) => {
-              console.log(values)
+              console.log("first")
+              console.log("values : ", values)
+              console.log("last")
             }}
             //form render edilir
             component={(props) =>
