@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import AuthHeader from "../components/AuthHeader";
 import AuthImage from "../components/AuthImage";
 import LoginForm from "../components/LoginForm";
+import useAuthCall from "../hook/useAuthCall"
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -23,6 +24,7 @@ const SignupSchema = Yup.object().shape({
 });
 
 const Login = () => {
+  const { login } = useAuthCall();
   const theme = useTheme();
 
   return (
@@ -60,10 +62,12 @@ const Login = () => {
             validationSchema={SignupSchema
             }
             // Gerçek uygulamalarda, burada veriyi API'ye gönderebiliriz.
-            onSubmit={(values) => {
-              console.log("first")
-              console.log("values : ", values)
-              console.log("last")
+            onSubmit={(values, actions) => {
+              login(values);
+              console.log("login inside : ", values)
+              actions.resetForm()
+              actions.setSubmitting(false)
+
             }}
             //form render edilir
             component={(props) =>
