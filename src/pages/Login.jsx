@@ -63,11 +63,12 @@ const Login = () => {
             }
             // Gerçek uygulamalarda, burada veriyi API'ye gönderebiliriz.
             onSubmit={(values, actions) => {
+              // API isteği veya başka bir işlem
               login(values);
-              console.log("login inside : ", values)
+              // Formu sıfırla
               actions.resetForm()
+              // Gönderim durumunu false yap
               actions.setSubmitting(false)
-
             }}
             //form render edilir
             component={(props) =>
