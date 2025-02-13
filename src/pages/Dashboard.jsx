@@ -252,6 +252,7 @@ export default function MiniDrawer() {
                   fontSize: "1rem",
                   opacity: 1, // Logolar her zaman görünür
                   transition: "opacity 0.3s ease-in-out",
+
                 }}>
 
                 </Box>
