@@ -51,6 +51,7 @@ import { Button } from '@mui/material';
 import useAuthCall from "../hook/useAuthCall";
 import { useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const drawerWidth = 240;
 
@@ -177,7 +178,7 @@ export default function MiniDrawer() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} sx={{ background: "secondary", borderRadius: "1rem" }}>
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <IconButton
             color="inherit"
@@ -196,7 +197,14 @@ export default function MiniDrawer() {
           <Typography variant="h6" noWrap component="div">
             Stock Sage Management
           </Typography>
-          <Button color="inherit" onClick={logout}>Logout</Button>
+          <Button color="inherit" onClick={logout} sx={{
+            "&:hover": {
+              backgroundColor: "#7D1C4A",
+              color: "#F4CCE9",
+              borderRadius: "1rem"
+
+            }
+          }}>Logout <LogoutIcon /> </Button>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -206,7 +214,7 @@ export default function MiniDrawer() {
           </IconButton>
         </DrawerHeader>
 
-        <List>
+        <List >
           {links.map((text, index) => (
             <ListItem key={index} disablePadding sx={{ display: 'block' }}>
               <ListItemButton onClick={() => navigate(`${text.url}`)}

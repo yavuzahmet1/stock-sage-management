@@ -1,5 +1,6 @@
 import { Button, TextField } from '@mui/material'
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 const LoginForm = ({
     values,
@@ -10,6 +11,7 @@ const LoginForm = ({
     handleSubmit,
     isSubmitting,
 }) => {
+    const { loading } = useSelector(state => state.auth)
     return (
         <form onSubmit={handleSubmit}>
             <TextField
@@ -35,7 +37,10 @@ const LoginForm = ({
                 onBlur={handleBlur}
                 error={touched.password && errors.password}
                 margin="normal" />
-            <Button variant="contained" color="success" type="submit" fullWidth>Sign Up</Button>
+            <Button variant="contained" type="submit">
+                Sign In
+            </Button>
+
         </form>
     )
 }
