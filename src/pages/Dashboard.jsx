@@ -29,25 +29,20 @@
 // export default Dashboard;
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import { Button } from '@mui/material';
+import { Button, Box } from '@mui/material';
 import useAuthCall from "../hook/useAuthCall";
 import { useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
@@ -70,9 +65,9 @@ const closedMixin = (theme) => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
+  width: `80x)`,
   [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
+    width: `80px)`,
   },
 });
 
@@ -150,27 +145,33 @@ export default function MiniDrawer() {
   const links = [
     {
       title: "Dashboard",
-      url: ""
+      url: "",
+      icon: "public/assets/navbar/ic_analytics.svg"
     },
     {
       title: "firms",
-      url: "firms"
+      url: "firms",
+      icon: "public/assets/navbar/firms.svg"
     },
     {
       title: "products",
-      url: "products"
+      url: "products",
+      icon: "assets/navbar/ic_cart.svg"
     },
     {
       title: "purchases",
-      url: "purchases"
+      url: "purchases",
+      icon: "assets/navbar/purchase.svg"
     },
     {
       title: "sales",
-      url: "sales"
+      url: "sales",
+      icon: "assets/navbar/sales.svg"
     },
     {
       title: "brands",
-      url: "brands"
+      url: "brands",
+      icon: "assets/navbar/brand.svg"
     },
 
   ]
@@ -188,6 +189,7 @@ export default function MiniDrawer() {
             sx={[
               {
                 marginRight: 5,
+
               },
               open && { display: 'none' },
             ]}
@@ -222,6 +224,15 @@ export default function MiniDrawer() {
                   {
                     minHeight: 48,
                     px: 2.5,
+                    color: "secondary.main",
+                    fontSize: "3rem",
+                    borderRadius: "1rem",
+                    transition: "all 0.3s ease-in-out ",
+                    "&:hover": {
+                      backgroundColor: "secondary.second",
+                      color: "white",
+                      fontSize: "3rem"
+                    }
                   },
                   open
                     ? {
@@ -232,23 +243,18 @@ export default function MiniDrawer() {
                     },
                 ]}
               >
-                <ListItemIcon
-                  sx={[
-                    {
-                      minWidth: 0,
-                      justifyContent: 'center',
-                    },
-                    open
-                      ? {
-                        mr: 3,
-                      }
-                      : {
-                        mr: 'auto',
-                      },
-                  ]}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
+                <Box sx={{
+                  width: 24,
+                  height: 24,
+                  mask: `url(${text.icon})`,
+                  background: "red",
+                  m: 2,
+                  fontSize: "1rem",
+                  opacity: 1, // Logolar her zaman görünür
+                  transition: "opacity 0.3s ease-in-out",
+                }}>
+
+                </Box>
                 <ListItemText
                   primary={text.title}
                   sx={[
