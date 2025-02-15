@@ -12,7 +12,7 @@ const useStockCall = () => {
     const getFirms = async () => {
         dispatch(fetchStart())
         try {
-            const { data } = await axiosWithToken.get(firms)
+            const { data } = await axiosWithToken.get("firms")
             console.log(data)
             dispatch(firmSuccess(data))
 
