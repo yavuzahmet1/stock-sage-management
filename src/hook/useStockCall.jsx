@@ -45,6 +45,16 @@ const useStockCall = () => {
         }
     }
 
+    const addStockData = async () => {
+        dispatch(fetchStart())
+        try {
+
+        } catch (error) {
+            dispatch(fetchFail())
+        }
+
+    }
+
     return { getStockData, deleteStockData }
 }
 
