@@ -23,9 +23,7 @@ const useAuthCall = () => {
 
         try {
             const { data } = await axios.post(`${BASE_URL}/users/`, userInfo)
-
             dispatch(registerSuccess(data))
-
             navigate("/stock");
 
         } catch (error) {
@@ -41,9 +39,7 @@ const useAuthCall = () => {
                     Authorization: `Token ${token}`
                 }
             })
-
             dispatch(logoutSuccess())
-
             navigate("/")
 
         } catch (error) {
