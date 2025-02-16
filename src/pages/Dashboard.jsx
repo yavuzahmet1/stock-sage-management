@@ -1,32 +1,3 @@
-// import React from "react";
-// import AppBar from "@mui/material/AppBar";
-// import Box from "@mui/material/Box";
-// import CssBaseline from "@mui/material/CssBaseline";
-// import Toolbar from "@mui/material/Toolbar";
-// import Button from "@mui/material/Button";
-// import Typography from "@mui/material/Typography";
-// import useAuthCall from "../hook/useAuthCall";
-
-// function Dashboard() {
-
-//   const { logout } = useAuthCall()
-
-//   return (
-//     <Box sx={{ display: "flex" }}>
-//       <CssBaseline />
-//       <AppBar position="fixed">
-//         <Toolbar>
-//           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-//             STOCK APP
-//           </Typography>
-//           <Button color="inherit" onClick={logout}>Logout</Button>
-//         </Toolbar>
-//       </AppBar>
-//     </Box>
-//   );
-// }
-
-// export default Dashboard;
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
@@ -76,7 +47,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
@@ -149,27 +119,27 @@ export default function MiniDrawer() {
       icon: "public/assets/navbar/ic_analytics.svg"
     },
     {
-      title: "firms",
+      title: "Firms",
       url: "firms",
       icon: "public/assets/navbar/firms.svg"
     },
     {
-      title: "products",
+      title: "Products",
       url: "products",
       icon: "assets/navbar/ic_cart.svg"
     },
     {
-      title: "purchases",
+      title: "Purchases",
       url: "purchases",
       icon: "assets/navbar/purchase.svg"
     },
     {
-      title: "sales",
+      title: "Sales",
       url: "sales",
       icon: "assets/navbar/sales.svg"
     },
     {
-      title: "brands",
+      title: "Brands",
       url: "brands",
       icon: "assets/navbar/brand.svg"
     },
