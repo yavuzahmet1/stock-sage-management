@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, Button, Container } from '@mui/material'
 
 const Firms = () => {
-    const { getStockData } = useStockCall()
+    const { getStockData, deleteStockData } = useStockCall()
     const { firms } = useSelector(state => state.stock)
 
     useEffect(() => {
@@ -62,7 +62,7 @@ const Firms = () => {
                             <Box sx={{ mt: "1rem", display: "flex", justifyContent: "center", gap: "1rem" }}>
                                 <Button size="medium" variant="contained"><AppRegistrationIcon />  Edit</Button>
                                 <Button size="medium" variant="contained" startIcon={<DeleteIcon />}
-
+                                    onClick={() => deleteStockData("firms", _id)}
                                 >
                                     Delete
                                 </Button>

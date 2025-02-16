@@ -35,7 +35,7 @@ const useStockCall = () => {
     const deleteStockData = async (url, id) => {
         dispatch(fetchStart())
         try {
-            const { data } = await axiosWithToken.get(`${url}/${id}`)
+            const { data } = await axiosWithToken.delete(`${url}/${id}`)
 
             console.log("delete: ", data)
             getStockData(url)
