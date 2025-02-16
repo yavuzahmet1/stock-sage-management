@@ -1,12 +1,8 @@
-import React from 'react'
 import { useEffect } from 'react'
 import useStockCall from '../hook/useStockCall'
-import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
+import { CardContent, CardMedia, Typography } from '@mui/material';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, Button, Container } from '@mui/material'
@@ -15,7 +11,6 @@ const Firms = () => {
     const { getFirms } = useStockCall()
     const dispatch = useDispatch()
     const { firms } = useSelector(state => state.stock)
-
 
     useEffect(() => {
         dispatch(getFirms)
@@ -27,11 +22,15 @@ const Firms = () => {
     };
     return (
         <Container>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-start', ml: 2 }}>
+            <Typography fontFamily="Apple Color Emoji" textAlign="center" variant='h4' >FIRMS</Typography>
+
+            <Box sx={{ display: 'flex', justifyContent: 'flex-start', ml: 2, }}>
+
                 <Button
                     variant="contained"
                     color="success"
                     onClick={handleNewFirm}
+                    size='large'
                 >
                     Add Firm
                 </Button>
@@ -43,10 +42,10 @@ const Firms = () => {
 
                     <Card key={name} sx={{ maxWidth: 345, m: "0.3rem", padding: "1rem" }}>
 
-                        <Typography gutterBottom variant="h5" component="div">
+                        <Typography fontFamily="arial" gutterBottom variant="h5" component="div">
                             {name}
                         </Typography>
-                        <Typography variant="body2" sx={{ color: 'text.secondary', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        <Typography variant="h9" fontFamily="arial" sx={{ color: 'text.secondary', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                             {address}
                         </Typography><br />
                         <CardMedia
@@ -57,7 +56,7 @@ const Firms = () => {
                             alt="image"
                         />
                         <CardContent>
-                            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                            <Typography fontFamily="Apple Color Emoji" variant="body2" sx={{ color: 'text.secondary' }}>
                                 {phone}
                             </Typography>
                             <Box sx={{ mt: "1rem", display: "flex", justifyContent: "center", gap: "1rem" }}>

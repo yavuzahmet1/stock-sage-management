@@ -21,7 +21,6 @@ const stockSlice = createSlice({
         firmSuccess: (state, { payload }) => {
             console.log("Slice data", payload)
             state.firms = payload.data;
-            console.log(state.firms)
             state.loading = false;
             state.error = false
         }
