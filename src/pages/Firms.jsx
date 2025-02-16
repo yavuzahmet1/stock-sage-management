@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import useStockCall from '../hook/useStockCall'
 import { useSelector } from 'react-redux'
 import Card from '@mui/material/Card';
@@ -6,6 +6,7 @@ import { CardContent, CardMedia, Typography } from '@mui/material';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, Button, Container } from '@mui/material'
+import FirmModal from '../components/Modal/FirmModal';
 
 const Firms = () => {
     const { getStockData, deleteStockData } = useStockCall()
@@ -15,20 +16,23 @@ const Firms = () => {
         getStockData("firms")
 
     }, [])
-    const handleNewFirm = () => {
-        console.log('New Firm clicked');
 
-    };
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+
     return (
         <Container>
             <Typography fontFamily="Apple Color Emoji" textAlign="center" variant='h4' >FIRMS</Typography>
-
+            <FirmModal open={open} handleClose={handleClose} handleOpen={handleOpen} />
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', ml: 2, }}>
 
                 <Button
                     variant="contained"
                     color="success"
-                    onClick={handleNewFirm}
+                    onClick={() => setOpen(!open)}
                     size='large'
                 >
                     Add Firm
