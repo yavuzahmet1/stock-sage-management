@@ -6,6 +6,8 @@ import { CardContent, CardMedia, Typography } from '@mui/material';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, Button, Container } from '@mui/material'
+import BrandModal from '../components/Modal/BrandModal';
+import { useState } from 'react';
 
 const Brands = () => {
 
@@ -15,24 +17,22 @@ const Brands = () => {
     useEffect(() => {
         getStockData("brands")
     }, [])
-    useEffect(() => {
-        getStockData("firms")
 
-    }, [])
-    const handleNewFirm = () => {
-        console.log('New Firm clicked');
 
-    };
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
     return (
         <Container>
             <Typography fontFamily="Apple Color Emoji" textAlign="center" variant='h4' >BRANDS</Typography>
-
+            <BrandModal open={open} handleClose={handleClose} handleOpen={handleOpen} />
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', ml: 2, }}>
 
                 <Button
                     variant="contained"
                     color="success"
-                    onClick={handleNewFirm}
+                    onClick={() => setOpen(!open)}
                     size='large'
                 >
                     Add Brand

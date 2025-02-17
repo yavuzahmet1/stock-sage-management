@@ -26,12 +26,10 @@ const style = {
     border: "none"
 };
 
-export default function FirmModal({ open, handleClose }) {
+export default function BrandModal({ open, handleClose }) {
     const { addStockData } = useStockCall()
     const [info, setInfo] = useState({
         name: "",
-        phone: "",
-        address: "",
         image: ""
     })
     const handleChange = (e) => {
@@ -42,8 +40,8 @@ export default function FirmModal({ open, handleClose }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Form gönderildi:", info);
-        addStockData("firms", info)
-        handleClose = true
+        addStockData("brands", info)
+        handleClose()
     }
 
     return (
@@ -63,7 +61,7 @@ export default function FirmModal({ open, handleClose }) {
                         Add To Firm
                     </Typography>
                     <TextField
-                        color="warning"
+                        color="primary"
                         label="Name"
                         variant="standard"
                         name="name"
@@ -71,30 +69,14 @@ export default function FirmModal({ open, handleClose }) {
                         onChange={handleChange}
                     />
                     <TextField
-                        color="warning"
-                        label="Phone"
-                        variant="standard"
-                        name="phone"
-                        value={info.phone}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        color="warning"
-                        label="Address"
-                        variant="standard"
-                        name="address"
-                        value={info.address}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        color="warning"
-                        name="image"
+                        color="primary"
                         label="Image"
                         variant="standard"
+                        name="image"
                         value={info.image}
-                        type="text"
                         onChange={handleChange}
                     />
+
                     <Button
                         type="submit"
                         sx={{ borderRadius: "2rem" }}
