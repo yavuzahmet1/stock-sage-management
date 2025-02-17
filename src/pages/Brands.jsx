@@ -9,13 +9,16 @@ import { Box, Button, Container } from '@mui/material'
 
 const Brands = () => {
 
-    const { getStockData } = useStockCall();
+    const { getStockData, deleteStockData } = useStockCall();
     const { brands } = useSelector((state => state.stock))
 
     useEffect(() => {
         getStockData("brands")
     }, [])
+    useEffect(() => {
+        getStockData("firms")
 
+    }, [])
     const handleNewFirm = () => {
         console.log('New Firm clicked');
 
@@ -57,7 +60,9 @@ const Brands = () => {
 
                             <Box sx={{ mt: "1rem", display: "flex", justifyContent: "center", gap: "1rem" }}>
                                 <Button size="medium" variant="contained"><AppRegistrationIcon />  Edit</Button>
-                                <Button size="medium" variant="contained" startIcon={<DeleteIcon />}>
+                                <Button size="medium" variant="contained" startIcon={<DeleteIcon />}
+                                    onClick={() => deleteStockData("brands", _id)}
+                                >
                                     Delete
                                 </Button>
 
@@ -68,7 +73,7 @@ const Brands = () => {
 
                 ))}
             </Box>
-        </Container>
+        </Container >
     )
 
 }
