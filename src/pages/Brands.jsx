@@ -17,7 +17,10 @@ const Brands = () => {
     useEffect(() => {
         getStockData("brands")
     }, [])
-
+    const [selectedData, setSelectedData] = useState({
+        name: "",
+        image: ""
+    })
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -26,7 +29,7 @@ const Brands = () => {
     return (
         <Container>
             <Typography fontFamily="Apple Color Emoji" textAlign="center" variant='h4' >BRANDS</Typography>
-            <BrandModal open={open} handleClose={handleClose} handleOpen={handleOpen} />
+            <BrandModal open={open} handleClose={handleClose} selectedData={selectedData} />
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', ml: 2, }}>
 
                 <Button
@@ -41,7 +44,7 @@ const Brands = () => {
             <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1rem', padding: '1rem' }}>
 
 
-                {brands.map(({ image, _id, name }) => (
+                {brands?.map(({ image, _id, name }) => (
 
                     <Card key={_id} sx={{ maxWidth: 345, m: "0.3rem", padding: "1rem" }}>
 
@@ -59,7 +62,14 @@ const Brands = () => {
                         <CardContent>
 
                             <Box sx={{ mt: "1rem", display: "flex", justifyContent: "center", gap: "1rem" }}>
-                                <Button size="medium" variant="contained"><AppRegistrationIcon />  Edit</Button>
+                                <Button size="medium" variant="contained"
+
+                                    onClick={() => {
+
+                                        setSelectedData({ image, _id, name })
+                                        handleOpen()
+                                    }}
+                                ><AppRegistrationIcon />  Edit</Button>
                                 <Button size="medium" variant="contained" startIcon={<DeleteIcon />}
                                     onClick={() => deleteStockData("brands", _id)}
                                 >

@@ -24,7 +24,7 @@ const Firms = () => {
     const [selectedData, setSelectedData] = useState({
         name: "",
         address: "",
-        image: "",
+        phone: "",
         image: ""
     })
 

@@ -6,6 +6,7 @@ import Modal from '@mui/material/Modal';
 import { TextField } from '@mui/material';
 import { useState } from 'react';
 import useStockCall from '../../hook/useStockCall';
+import { useEffect } from 'react';
 
 const style = {
     position: 'absolute',
@@ -26,8 +27,8 @@ const style = {
     border: "none"
 };
 
-export default function BrandModal({ open, handleClose }) {
-    const { addStockData } = useStockCall()
+export default function BrandModal({ open, handleClose, selectedData }) {
+    const { addStockData, updateStockData } = useStockCall()
     const [info, setInfo] = useState({
         name: "",
         image: ""
@@ -39,11 +40,17 @@ export default function BrandModal({ open, handleClose }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Form gönderildi:", info);
-        addStockData("brands", info)
+        if (info._id) {
+            updateStockData("brands", info);
+            console.log("Form güncellendi:", info);
+        } else {
+            addStockData("brands", info);
+            console.log("Form gönderildi:", info);
+        }
         handleClose()
     }
 
+    useEffect(() => setInfo(selectedData), [selectedData])
     return (
         <div>
             <Modal
