@@ -6,6 +6,7 @@ import Modal from '@mui/material/Modal';
 import { TextField } from '@mui/material';
 import { useState } from 'react';
 import useStockCall from '../../hook/useStockCall';
+import { useEffect } from 'react';
 
 const style = {
     position: 'absolute',
@@ -26,25 +27,29 @@ const style = {
     border: "none"
 };
 
-export default function FirmModal({ open, handleClose }) {
-    const { addStockData } = useStockCall()
+export default function FirmModal({ open, handleClose, selectedData, caption }) {
+    const { addStockData, updateStockData } = useStockCall()
     const [info, setInfo] = useState({
         name: "",
         phone: "",
         address: "",
-        image: ""
+        image: "",
     })
     const handleChange = (e) => {
         setInfo({ ...info, [e.target.name]: e.target.value })
-
     }
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Form gönderildi:", info);
-        addStockData("firms", info)
-        handleClose = true
+        if (info._id) {
+            updateStockData("firms", info);
+            console.log("Form güncellendi:", info);
+        } else {
+            addStockData("firms", info);
+            console.log("Form gönderildi:", info);
+        }
+        handleClose()
     }
+    useEffect(() => { setInfo(selectedData) }, [selectedData])
 
     return (
         <div>
@@ -60,14 +65,14 @@ export default function FirmModal({ open, handleClose }) {
                     onSubmit={handleSubmit}
                 >
                     <Typography color="warning" variant="h5" textAlign="center">
-                        Add To Firm
+                        {caption.modalHeader}
                     </Typography>
                     <TextField
                         color="warning"
                         label="Name"
                         variant="standard"
                         name="name"
-                        value={info.name}
+                        value={info.name || ""}
                         onChange={handleChange}
                     />
                     <TextField
@@ -75,7 +80,7 @@ export default function FirmModal({ open, handleClose }) {
                         label="Phone"
                         variant="standard"
                         name="phone"
-                        value={info.phone}
+                        value={info.phone || ""}
                         onChange={handleChange}
                     />
                     <TextField
@@ -83,7 +88,7 @@ export default function FirmModal({ open, handleClose }) {
                         label="Address"
                         variant="standard"
                         name="address"
-                        value={info.address}
+                        value={info.address || ""}
                         onChange={handleChange}
                     />
                     <TextField
@@ -91,7 +96,7 @@ export default function FirmModal({ open, handleClose }) {
                         name="image"
                         label="Image"
                         variant="standard"
-                        value={info.image}
+                        value={info.image || ""}
                         type="text"
                         onChange={handleChange}
                     />
@@ -101,7 +106,7 @@ export default function FirmModal({ open, handleClose }) {
                         color="success"
                         variant="contained"
                     >
-                        Add
+                        {caption.buttonCaption}
                     </Button>
                 </Box>
             </Modal>

@@ -27,6 +27,7 @@ const stockSlice = createSlice({
             state.error = false
         },
 
+
     }
 })
 

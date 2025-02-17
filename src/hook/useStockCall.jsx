@@ -24,7 +24,6 @@ const useStockCall = () => {
         dispatch(fetchStart())
         try {
             const { data } = await axiosWithToken.get(`${url}`)
-            console.log("getStockData : ", data)
             dispatch(stockSuccess({ data, url }))
 
         } catch (error) {
@@ -36,8 +35,6 @@ const useStockCall = () => {
         dispatch(fetchStart())
         try {
             const { data } = await axiosWithToken.delete(`${url}/${id}`)
-
-            console.log("delete: ", data)
             getStockData(url)
 
         } catch (error) {
@@ -49,6 +46,16 @@ const useStockCall = () => {
         dispatch(fetchStart())
         try {
             const { data } = await axiosWithToken.post(url, info)
+            getStockData(url)
+        } catch (error) {
+            dispatch(fetchFail())
+        }
+
+    }
+    const updateStockData = async (url, info) => {
+        dispatch(fetchStart())
+        try {
+            const { data } = await axiosWithToken.put(`${url}/${info._id}`, info)
             console.log(data)
             getStockData(url)
         } catch (error) {
@@ -57,7 +64,7 @@ const useStockCall = () => {
 
     }
 
-    return { getStockData, deleteStockData, addStockData }
+    return { getStockData, deleteStockData, addStockData, updateStockData }
 }
 
 export default useStockCall

@@ -10,29 +10,44 @@ import FirmModal from '../components/Modal/FirmModal';
 
 const Firms = () => {
     const { getStockData, deleteStockData } = useStockCall()
+
     const { firms } = useSelector(state => state.stock)
 
     useEffect(() => {
         getStockData("firms")
 
     }, [])
-
+    const [caption, setCaption] = useState({
+        modalHeader: "",
+        buttonCaption: ""
+    })
+    const [selectedData, setSelectedData] = useState({
+        name: "",
+        address: "",
+        image: "",
+        image: ""
+    })
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-
     return (
         <Container>
             <Typography fontFamily="Apple Color Emoji" textAlign="center" variant='h4' >FIRMS</Typography>
-            <FirmModal open={open} handleClose={handleClose} handleOpen={handleOpen} />
+            <FirmModal open={open} handleClose={handleClose} selectedData={selectedData} caption={caption} />
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', ml: 2, }}>
 
                 <Button
                     variant="contained"
                     color="success"
-                    onClick={() => setOpen(!open)}
+                    onClick={() => {
+                        setOpen(!open);
+                        setCaption({
+                            modalHeader: "Add Data",
+                            buttonCaption: "Add"
+                        })
+                    }}
                     size='large'
                 >
                     Add Firm
@@ -64,9 +79,21 @@ const Firms = () => {
                                 {phone}
                             </Typography>
                             <Box sx={{ mt: "1rem", display: "flex", justifyContent: "center", gap: "1rem" }}>
-                                <Button size="medium" variant="contained"><AppRegistrationIcon />  Edit</Button>
+                                <Button size="medium" variant="contained"
+                                    onClick={() => {
+                                        setSelectedData({ _id, name, phone, address, image });
+                                        setOpen(!open);
+                                        setCaption({
+                                            modalHeader: "Update Data",
+                                            buttonCaption: "Update"
+                                        })
+                                    }}
+                                ><AppRegistrationIcon />  Edit</Button>
                                 <Button size="medium" variant="contained" startIcon={<DeleteIcon />}
-                                    onClick={() => deleteStockData("firms", _id)}
+                                    onClick={() =>
+                                        deleteStockData("firms", _id)
+
+                                    }
                                 >
                                     Delete
                                 </Button>
