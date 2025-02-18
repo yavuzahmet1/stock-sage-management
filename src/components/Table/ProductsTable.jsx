@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useSelector } from 'react-redux';
 import { GridDeleteIcon } from '@mui/x-data-grid';
 import useStockCall from '../../hook/useStockCall';
@@ -34,28 +34,28 @@ export default function ProductsTable() {
         {
             field: 'categoryId',
             headerName: 'Category',
-            width: 150,
+            width: 250,
             editable: true,
             valueGetter: ((value) => value.name)
         },
         {
             field: 'brandId',
             headerName: 'Brand',
-            width: 150,
+            width: 300,
             editable: true,
             valueGetter: ((value) => value.name)
         },
         {
             field: 'name',
             headerName: 'Name',
-            width: 110,
+            width: 200,
             editable: true,
         },
         {
             field: 'quantity',
             headerName: 'Stock',
             type: 'number',
-            width: 110,
+            width: 200,
             editable: true,
         },
         {
@@ -64,8 +64,9 @@ export default function ProductsTable() {
             description: 'This column has a value getter and is not sortable.',
             sortable: false,
             width: 160,
+            headerAlign: "center",
+            align: "center",
             renderCell: (params) => (
-                // console.log("params", params);
                 < GridDeleteIcon onClick={() => deleteStockData("products", params.id)} />
             )
         },
@@ -84,9 +85,10 @@ export default function ProductsTable() {
                         },
                     },
                 }}
-                pageSizeOptions={[5]}
+                pageSizeOptions={[5, 10, 15]}
                 checkboxSelection
                 disableRowSelectionOnClick
+                slots={{ toolbar: GridToolbar }}
             />
         </Box>
     );
