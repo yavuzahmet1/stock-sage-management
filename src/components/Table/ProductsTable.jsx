@@ -2,6 +2,8 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import { useSelector } from 'react-redux';
+import { GridDeleteIcon } from '@mui/x-data-grid';
+import useStockCall from '../../hook/useStockCall';
 
 
 
@@ -23,6 +25,7 @@ const getRowId = (row) => {
 }
 
 export default function ProductsTable() {
+    const { deleteStockData } = useStockCall()
     const { products } = useSelector(state => state.stock)
     console.log("first", products)
 
@@ -33,12 +36,14 @@ export default function ProductsTable() {
             headerName: 'Category',
             width: 150,
             editable: true,
+            valueGetter: ((value) => value.name)
         },
         {
             field: 'brandId',
             headerName: 'Brand',
             width: 150,
             editable: true,
+            valueGetter: ((value) => value.name)
         },
         {
             field: 'name',
@@ -54,12 +59,15 @@ export default function ProductsTable() {
             editable: true,
         },
         {
-            field: 'fullName',
-            headerName: 'Full name',
+            field: "actions",
+            headerName: 'Actions',
             description: 'This column has a value getter and is not sortable.',
             sortable: false,
             width: 160,
-            valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
+            renderCell: (params) => (
+                // console.log("params", params);
+                < GridDeleteIcon onClick={() => deleteStockData("products", params.id)} />
+            )
         },
     ];
 
