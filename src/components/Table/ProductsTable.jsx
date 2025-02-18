@@ -1,37 +1,10 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
+import { useSelector } from 'react-redux';
 
-const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    {
-        field: 'firstName',
-        headerName: 'First name',
-        width: 150,
-        editable: true,
-    },
-    {
-        field: 'lastName',
-        headerName: 'Last name',
-        width: 150,
-        editable: true,
-    },
-    {
-        field: 'age',
-        headerName: 'Age',
-        type: 'number',
-        width: 110,
-        editable: true,
-    },
-    {
-        field: 'fullName',
-        headerName: 'Full name',
-        description: 'This column has a value getter and is not sortable.',
-        sortable: false,
-        width: 160,
-        valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
-    },
-];
+
+
 
 const rows = [
     { id: 1, lastName: 'Snow', firstName: 'Jon', age: 14 },
@@ -45,11 +18,56 @@ const rows = [
     { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
 
+const getRowId = (row) => {
+    return row._id;
+}
+
 export default function ProductsTable() {
+    const { products } = useSelector(state => state.stock)
+    console.log("first", products)
+
+    const columns = [
+        { field: '_id', headerName: 'ID', width: 90 },
+        {
+            field: 'categoryId',
+            headerName: 'Category',
+            width: 150,
+            editable: true,
+        },
+        {
+            field: 'brandId',
+            headerName: 'Brand',
+            width: 150,
+            editable: true,
+        },
+        {
+            field: 'name',
+            headerName: 'Name',
+            width: 110,
+            editable: true,
+        },
+        {
+            field: 'quantity',
+            headerName: 'Stock',
+            type: 'number',
+            width: 110,
+            editable: true,
+        },
+        {
+            field: 'fullName',
+            headerName: 'Full name',
+            description: 'This column has a value getter and is not sortable.',
+            sortable: false,
+            width: 160,
+            valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
+        },
+    ];
+
     return (
         <Box sx={{ height: 400, width: '100%' }}>
             <DataGrid
-                rows={rows}
+                getRowId={getRowId}
+                rows={products}
                 columns={columns}
                 initialState={{
                     pagination: {
