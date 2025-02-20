@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 const useStockCall = () => {
     const dispatch = useDispatch();
     const { axiosWithToken } = useAxios()
-    const { token } = useSelector(state => state.auth)
+    // const { token } = useSelector(state => state.auth)
 
     // const getFirms = async () => {
     //     dispatch(fetchStart())
@@ -64,7 +64,24 @@ const useStockCall = () => {
 
     }
 
-    return { getStockData, deleteStockData, addStockData, updateStockData }
+    const getProducts = async () => {
+        dispatch(fetchStart())
+        try {
+
+            const [products, categories, brands] = await Promise.all([
+                axiosWithToken("products"),
+                axiosWithToken("categories"),
+                axiosWithToken("brands")
+            ])
+            console.log(newData)
+            dispatch(getProCatBrandSuccess([products?.data?.data, categories?.data?.data, brands?.data?.data]))
+        } catch (error) {
+            dispatch(fetchFail())
+
+        }
+    }
+
+    return { getStockData, deleteStockData, addStockData, updateStockData, getProducts }
 }
 
 export default useStockCall

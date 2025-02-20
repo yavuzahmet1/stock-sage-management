@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import ProductModal from '../components/Modal/ProductModal';
 
 const Products = () => {
-    const { getStockData } = useStockCall()
+    const { getStockData, getProducts } = useStockCall()
 
     const { selectedData, setSelectedData } = useState({
         category: "",
@@ -17,12 +17,15 @@ const Products = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    useEffect(() => {
-        getStockData("products")
-        getStockData("brands")
-        getStockData("categories")
-    })
+    // useEffect(() => {
+    //     getStockData("products")
+    //     getStockData("brands")
+    //     getStockData("categories")
+    // })
 
+    useEffect(() => {
+        getProducts()
+    })
 
     return (
         <div>
