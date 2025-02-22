@@ -23,18 +23,15 @@ const stockSlice = createSlice({
             state.error = true;
         },
         stockSuccess: (state, { payload }) => {
-            console.log("Slice data", payload);
-            state[payload.url] = payload.data?.data || payload.data; // data.data yoksa direkt data'yı kullan
+            state[payload.url] = payload.data?.data || payload.data;
             state.loading = false;
             state.error = false;
         },
         getProCatBrandSuccess: (state, { payload }) => {
-            console.log("payload içindeyim")
-            console.log("payload", payload);
             state.loading = false;
-            state.products = payload[0] || []; // products için varsayılan boş dizi
-            state.categories = payload[1] || []; // categories için varsayılan boş dizi
-            state.brands = payload[2] || []; // brands için varsayılan boş dizi
+            state.products = payload[0] || [];
+            state.categories = payload[1] || [];
+            state.brands = payload[2] || [];
         }
     },
 });

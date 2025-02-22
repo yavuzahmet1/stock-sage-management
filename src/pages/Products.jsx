@@ -21,10 +21,7 @@ const Products = () => {
 
     useEffect(() => {
         getProducts();
-        console.log("getProducts fonksiyonu çağrıldı");
     }, []);
-    const { products } = useSelector((state) => state.stock);
-    console.log("products state:", products);
     return (
         <div>
             <Container>
