@@ -1,62 +1,112 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, GridActionsCellItem } from '@mui/x-data-grid';
 import { useSelector } from 'react-redux';
+import useStockCall from '../../hook/useStockCall';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-export default function PurchasesTable() {
+const btnStyle = {
+    color: "primary",
+};
+
+const getRowId = (row) => row._id;
+export default function PurchasesTable({ handleOpen, setSelectedData }) {
     const { purchases } = useSelector((state) => state.stock);
+    const { deleteStockData } = useStockCall();
 
-    console.log("Purchases data:", purchases);
+    console.log("Purchases data: table inside ", purchases);
+
 
     const columns = [
         {
-            field: 'updatedAt',
-            headerName: 'Date',
-            width: 150,
-            valueGetter: (value) => new Date(value.row.updatedAt).toLocaleDateString(), // Tarihi formatla
+            field: "createdAt",
+            headerName: "Date",
+            minWidth: 150,
+            headerAlign: "center",
+            align: "center",
+            valueGetter: (value) => {
+                return new Date(value).toLocaleString("de-DE");
+            },
         },
         {
-            field: 'firmId',
-            headerName: 'Firm',
-            width: 200,
-            valueGetter: (value) => value.firmId?.name || '-No Firm-', // firmId null olabilir
+            field: "brandId",
+            headerName: "Brand",
+            flex: 1,
+            minWidth: 100,
+            headerAlign: "center",
+            align: "center",
+            valueGetter: (value) => {
+                return value?.name ?? "-No Brand-";
+            },
         },
         {
-            field: 'brandId',
-            headerName: 'Brand',
-            width: 200,
-            valueGetter: (value) => value.brandId?.name || '-No Brand-', // brandId null olabilir
+            field: "productId",
+            headerName: "Product",
+            flex: 1,
+            minWidth: 100,
+            headerAlign: "center",
+            align: "center",
+            valueGetter: (value) => {
+                return value?.name ?? "-No Product-";
+            },
         },
         {
-            field: 'productId',
-            headerName: 'Product',
-            width: 200,
-            valueGetter: (value) => value.productId?.name || '-No Product-', // productId null olabilir
+            field: "quantity",
+            headerName: "Quantity",
+            minWidth: 50,
+            headerAlign: "center",
+            align: "center",
         },
         {
-            field: 'quantity',
-            headerName: 'Quantity',
-            type: 'number',
-            width: 120,
+            field: "price",
+            headerName: "Price",
+            minWidth: 50,
+            headerAlign: "center",
+            align: "center",
         },
         {
-            field: 'price',
-            headerName: 'Price',
-            type: 'number',
-            width: 120,
+            field: "amount",
+            headerName: "Amount",
+            minWidth: 50,
+            headerAlign: "center",
+            align: "center",
         },
         {
-            field: 'amount',
-            headerName: 'Amount',
-            type: 'number',
-            width: 120,
+            field: "actions",
+            headerName: "Actions",
+            minWidth: 40,
+            headerAlign: "center",
+            align: "center",
+            renderCell: ({ row: { brandId, price, quantity, productId, _id } }) => {
+                return [
+                    <GridActionsCellItem
+                        key={"edit"}
+                        icon={<EditIcon />}
+                        label="Edit"
+                        onClick={() => {
+                            handleOpen();
+                            setSelectedData({ brandId, price, quantity, productId, _id });
+                        }}
+                        sx={btnStyle}
+                    />,
+                    <GridActionsCellItem
+                        key={"delete"}
+                        icon={<DeleteIcon />}
+                        label="Delete"
+                        onClick={() => deleteStockData("purchases", _id)}
+                        sx={btnStyle}
+                    />,
+                ];
+            },
         },
     ];
 
     return (
-        <Box sx={{ height: 400, width: '100%' }}>
+
+        <Box sx={{ width: "100%", marginTop: "1rem" }}>
             <DataGrid
-                rows={purchases}
+                rows={purchases || []}
                 columns={columns}
                 initialState={{
                     pagination: {
@@ -65,9 +115,13 @@ export default function PurchasesTable() {
                         },
                     },
                 }}
-                pageSizeOptions={[5, 10, 15]}
+                getRowId={getRowId}
+                slots={{
+                    toolbar: GridToolbar,
+                }}
+                // autoHeight
+                pageSizeOptions={[5, 10, 15, 25, 50]}
                 disableRowSelectionOnClick
-                slots={{ toolbar: GridToolbar }} // Araç çubuğunu ekle
             />
         </Box>
     );

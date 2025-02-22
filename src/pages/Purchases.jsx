@@ -1,21 +1,28 @@
 import { Button, Container, Typography } from '@mui/material';
 import useStockCall from '../hook/useStockCall'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import PurchasesTable from '../components/Table/PurchasesTable';
+import { useSelector } from 'react-redux';
 
 const Purchases = () => {
-    const { getStockData } = useStockCall()
+    const { getPurchases } = useStockCall();
+    const { loading, error } = useSelector((state) => state.stock);
+
+    const [selectedData, setSelectedData] = useState({
+        brandId: "",
+        firmId: "",
+        productId: "",
+        quantity: "",
+        price: "",
+    });
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     useEffect(() => {
-        console.log("products")
-        getStockData("products")
-        console.log("brands")
-        getStockData("brands")
-        console.log("categories")
-        getStockData("categories")
-        console.log("Purchases")
-        getStockData("purchases");
-    })
+        getPurchases()
+    }, [])
 
     return (
         <div>
@@ -24,10 +31,11 @@ const Purchases = () => {
 
                 <Button
                     variant="contained"
+                    onClick={handleOpen} sx={{ marginBottom: "1rem" }}
                 >
                     Add Purchases
                 </Button>
-                <PurchasesTable />
+                <PurchasesTable open={open} setSelectedData={setSelectedData} />
             </Container>
         </div>
     )
