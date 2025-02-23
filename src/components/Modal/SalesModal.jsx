@@ -52,11 +52,8 @@ const SalesModal = ({ open, handleClose, selectedData }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (info.firmId) {
-            console.log("updated data", info)
             updateStockData("sales", info);
-
         } else {
-            console.log("add data", info)
             addStockData("sales", info);
         }
         handleClose();

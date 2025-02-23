@@ -42,10 +42,8 @@ export default function FirmModal({ open, handleClose, selectedData, caption }) 
         e.preventDefault();
         if (info._id) {
             updateStockData("firms", info);
-            console.log("Form güncellendi:", info);
         } else {
             addStockData("firms", info);
-            console.log("Form gönderildi:", info);
         }
         handleClose()
     }

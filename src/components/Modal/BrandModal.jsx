@@ -42,10 +42,8 @@ export default function BrandModal({ open, handleClose, selectedData }) {
         e.preventDefault();
         if (info._id) {
             updateStockData("brands", info);
-            console.log("Form güncellendi:", info);
         } else {
             addStockData("brands", info);
-            console.log("Form gönderildi:", info);
         }
         handleClose()
     }

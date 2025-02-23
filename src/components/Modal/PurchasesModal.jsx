@@ -53,11 +53,9 @@ export default function PurchasesModal({ open, handleClose, selectedData }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (info.firmId) {
-            console.log("updated data", info)
             updateStockData("purchases", info);
 
         } else {
-            console.log("add data", info)
             addStockData("purchases", info);
         }
         handleClose();

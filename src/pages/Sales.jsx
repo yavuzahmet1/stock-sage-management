@@ -1,6 +1,5 @@
 
 import React from 'react'
-import { useSelector } from 'react-redux'
 import useStockCall from '../hook/useStockCall'
 import { useEffect } from 'react'
 import SalesTable from '../components/Table/SalesTable'
@@ -10,8 +9,6 @@ import { Button, Container, Typography } from '@mui/material'
 
 const Sales = () => {
     const { getSales } = useStockCall()
-    const { sales } = useSelector(state => state.stock)
-    console.log("sales page : ", sales)
 
     const [selectedData, setSelectedData] = useState({
         brandId: "",
