@@ -1,11 +1,10 @@
 #Stock Sage Management 🚀
 
-  
-
 Stock Sage Management is a modern web application designed to help businesses easily manage stock, purchases, sales, and firm operations. This application allows businesses to track their inventory, manage purchase and sales transactions, and generate reports. With its user-friendly interface and powerful features, it streamlines your business processes.
 
-  ## Demo
 ![Stock Sage Management Demo](/public/assets/demo.gif)
+
+[Demo](https://stock-sage-management.vercel.app/)
 
 #Features ✨
 
