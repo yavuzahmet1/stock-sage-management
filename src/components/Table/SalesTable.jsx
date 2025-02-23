@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid, GridToolbar, GridActionsCellItem } from '@mui/x-data-grid';
 import { useSelector } from 'react-redux';
@@ -11,9 +10,11 @@ const btnStyle = {
 };
 
 const getRowId = (row) => row._id;
-export default function PurchasesTable({ handleOpen, setSelectedData }) {
-    const { purchases } = useSelector((state) => state.stock);
-    const { deleteStockData } = useStockCall();
+
+const SalesTable = ({ handleOpen, setSelectedData }) => {
+    const { deleteStockData } = useStockCall()
+    const { sales } = useSelector(state => state.stock)
+
 
     const columns = [
         {
@@ -26,17 +27,7 @@ export default function PurchasesTable({ handleOpen, setSelectedData }) {
                 return new Date(value).toLocaleString("de-DE");
             },
         },
-        {
-            field: "firmId",
-            headerName: "Firm",
-            flex: 1,
-            minWidth: 100,
-            headerAlign: "center",
-            align: "center",
-            valueGetter: (value) => {
-                return value?.name ?? "-No firm-";
-            },
-        },
+
         {
             field: "brandId",
             headerName: "Brand",
@@ -103,19 +94,17 @@ export default function PurchasesTable({ handleOpen, setSelectedData }) {
                         key={"delete"}
                         icon={<DeleteIcon />}
                         label="Delete"
-                        onClick={() => deleteStockData("purchases", _id)}
+                        onClick={() => deleteStockData("sales", _id)}
                         sx={btnStyle}
                     />,
                 ];
             },
         },
     ];
-
     return (
-
         <Box sx={{ width: "100%", marginTop: "1rem" }}>
             <DataGrid
-                rows={purchases || []}
+                rows={sales || []}
                 columns={columns}
                 initialState={{
                     pagination: {
@@ -134,4 +123,7 @@ export default function PurchasesTable({ handleOpen, setSelectedData }) {
             />
         </Box>
     );
+
 }
+
+export default SalesTable
