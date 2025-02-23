@@ -1,9 +1,6 @@
 import { useDispatch } from 'react-redux'
-import { fetchStart, fetchFail, firmSuccess, stockSuccess, getPurcBrandProFirmSuccess } from "../features/stockSlice"
+import { fetchStart, fetchFail, stockSuccess, getPurcBrandProFirmSuccess, getSaleBrandProduct, getProCatBrandSuccess } from "../features/stockSlice"
 import useAxios from './useAxios'
-import { useSelector } from 'react-redux';
-import { getProCatBrandSuccess } from "../features/stockSlice";
-
 
 const useStockCall = () => {
     const dispatch = useDispatch();
@@ -72,7 +69,13 @@ const useStockCall = () => {
                 axiosWithToken("categories"),
                 axiosWithToken("brands"),
             ]);
-            dispatch(getProCatBrandSuccess([products?.data?.data, categories?.data.data, brands?.data?.data]));
+            dispatch(getProCatBrandSuccess(
+                [
+                    products?.data?.data,
+                    categories?.data.data,
+                    brands?.data?.data
+                ]
+            ));
         } catch (error) {
             dispatch(fetchFail());
         }
@@ -100,7 +103,28 @@ const useStockCall = () => {
         }
     }
 
-    return { getStockData, deleteStockData, addStockData, updateStockData, getProducts, getPurchases }
+    const getSales = async () => {
+        dispatch(fetchStart())
+        try {
+            const [sales, brands, products] = await Promise.all([
+                axiosWithToken("sales"),
+                axiosWithToken("brands"),
+                axiosWithToken("products")
+            ]);
+            dispatch(getSaleBrandProduct(
+                [
+                    sales?.data?.data,
+                    brands?.data?.data,
+                    products?.data?.data
+                ]
+            ))
+        } catch (error) {
+
+            dispatch(fetchFail())
+        }
+    }
+
+    return { getStockData, deleteStockData, addStockData, updateStockData, getProducts, getPurchases, getSales }
 }
 
 export default useStockCall
