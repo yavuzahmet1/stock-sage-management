@@ -204,7 +204,7 @@ export default function MiniDrawer() {
                   background: "red",
                   m: 2,
                   fontSize: "1rem",
-                  opacity: 1, // Logolar her zaman görünür
+                  opacity: 1,
                   transition: "opacity 0.3s ease-in-out",
                 }} />
                 <ListItemText
