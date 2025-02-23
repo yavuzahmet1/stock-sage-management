@@ -30,20 +30,19 @@ const style = {
 };
 
 export default function PurchasesModal({ open, handleClose, selectedData }) {
-    const { categories, brands, product } = useSelector(state => state.stock);
-    const { addStockData } = useStockCall();
+    const { products, brands, firms } = useSelector(state => state.stock);
+    const { addStockData, updateStockData } = useStockCall();
 
-    const [info, setInfo] = useState({
-        categoryId: selectedData?.categoryId || "",
-        brandId: selectedData?.brandId || "",
-        name: selectedData?.name || "",
-    });
+    const [info, setInfo] = useState(selectedData)
 
     useEffect(() => {
         setInfo({
-            categoryId: selectedData?.categoryId || "",
+            firmId: selectedData?.firmId || "",
             brandId: selectedData?.brandId || "",
+            productId: selectedData?.productId || "",
             name: selectedData?.name || "",
+            quantity: selectedData?.quantity || "",
+            price: selectedData?.price || ""
         });
     }, [selectedData]);
 
@@ -53,7 +52,14 @@ export default function PurchasesModal({ open, handleClose, selectedData }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addStockData("Purchases", info);
+        if (info.firmId) {
+            console.log("updated data", info)
+            updateStockData("purchases", info);
+
+        } else {
+            console.log("add data", info)
+            addStockData("purchases", info);
+        }
         handleClose();
     };
 
@@ -71,20 +77,20 @@ export default function PurchasesModal({ open, handleClose, selectedData }) {
                     onSubmit={handleSubmit}
                 >
                     <Typography color="warning" variant="h5" textAlign="center">
-                        Add Product
+                        Add New Purchases
                     </Typography>
                     <FormControl variant="standard" fullWidth>
-                        <InputLabel id="demo-simple-select-standard-label">Category</InputLabel>
+                        <InputLabel id="demo-simple-select-standard-label">Firm</InputLabel>
                         <Select
                             labelId="demo-simple-select-standard-label"
                             id="demo-simple-select-standard"
-                            name="categoryId"
-                            value={info.categoryId || ""}
+                            name="firmId"
+                            value={info.firmId || ""}
                             onChange={handleChange}
-                            label="Category"
+                            label="Firm"
                         >
-                            {categories?.map(category => (
-                                <MenuItem key={category._id} value={category._id}>{category.name}</MenuItem>
+                            {firms?.map(firm => (
+                                <MenuItem key={firm._id} value={firm._id}>{firm.name}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>
@@ -103,13 +109,37 @@ export default function PurchasesModal({ open, handleClose, selectedData }) {
                             ))}
                         </Select>
                     </FormControl>
+                    <FormControl variant="standard" fullWidth>
+                        <InputLabel id="demo-simple-select-standard-label">Product</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-standard-label"
+                            id="demo-simple-select-standard"
+                            name="productId"
+                            value={info.productId || ""}
+                            onChange={handleChange}
+                            label="Product"
+                        >
+                            {products?.map(product => (
+                                <MenuItem key={product._id} value={product._id}>{product.name}</MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                     <TextField
                         color="warning"
-                        name="name"
-                        label="Product Name"
+                        name="quantity"
+                        label="Quantity"
                         variant="standard"
-                        value={info.name || ""}
-                        type="text"
+                        value={info.quantity || ""}
+                        type="number"
+                        onChange={handleChange}
+                    />
+                    <TextField
+                        color="warning"
+                        name="price"
+                        label="Price"
+                        variant="standard"
+                        value={info.price || ""}
+                        type="number"
                         onChange={handleChange}
                     />
                     <Button
@@ -118,7 +148,7 @@ export default function PurchasesModal({ open, handleClose, selectedData }) {
                         color="success"
                         variant="contained"
                     >
-                        Add Product
+                        Add New Purchases
                     </Button>
                 </Box>
             </Modal>

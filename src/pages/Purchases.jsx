@@ -3,6 +3,7 @@ import useStockCall from '../hook/useStockCall'
 import { useEffect, useState } from 'react';
 import PurchasesTable from '../components/Table/PurchasesTable';
 import { useSelector } from 'react-redux';
+import PurchasesModal from '../components/Modal/PurchasesModal';
 
 const Purchases = () => {
     const { getPurchases } = useStockCall();
@@ -35,7 +36,13 @@ const Purchases = () => {
                 >
                     Add Purchases
                 </Button>
-                <PurchasesTable open={open} setSelectedData={setSelectedData} />
+                <PurchasesTable handleOpen={handleOpen} setSelectedData={setSelectedData} />
+                {open && (
+                    <PurchasesModal
+                        open={open}
+                        handleClose={handleClose}
+                        selectedData={selectedData}
+                    />)}
             </Container>
         </div>
     )

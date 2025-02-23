@@ -17,7 +17,6 @@ export default function PurchasesTable({ handleOpen, setSelectedData }) {
 
     console.log("Purchases data: table inside ", purchases);
 
-
     const columns = [
         {
             field: "createdAt",
@@ -27,6 +26,17 @@ export default function PurchasesTable({ handleOpen, setSelectedData }) {
             align: "center",
             valueGetter: (value) => {
                 return new Date(value).toLocaleString("de-DE");
+            },
+        },
+        {
+            field: "firmId",
+            headerName: "Firm",
+            flex: 1,
+            minWidth: 100,
+            headerAlign: "center",
+            align: "center",
+            valueGetter: (value) => {
+                return value?.name ?? "-No firm-";
             },
         },
         {
@@ -86,6 +96,7 @@ export default function PurchasesTable({ handleOpen, setSelectedData }) {
                         label="Edit"
                         onClick={() => {
                             handleOpen();
+                            console.log("edit button ruuning", handleOpen)
                             setSelectedData({ brandId, price, quantity, productId, _id });
                         }}
                         sx={btnStyle}
@@ -119,7 +130,7 @@ export default function PurchasesTable({ handleOpen, setSelectedData }) {
                 slots={{
                     toolbar: GridToolbar,
                 }}
-                // autoHeight
+                autoHeight
                 pageSizeOptions={[5, 10, 15, 25, 50]}
                 disableRowSelectionOnClick
             />
