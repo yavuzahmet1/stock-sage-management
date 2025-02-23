@@ -36,9 +36,9 @@ const closedMixin = (theme) => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `80x)`,
+  width: `80px`,
   [theme.breakpoints.up('sm')]: {
-    width: `80px)`,
+    width: `80px`,
   },
 });
 
@@ -52,49 +52,36 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme }) => ({
+})(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  variants: [
-    {
-      props: ({ open }) => open,
-      style: {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.enteringScreen,
-        }),
-      },
-    },
-  ],
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
 }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme }) => ({
+  ({ theme, open }) => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
-    variants: [
-      {
-        props: ({ open }) => open,
-        style: {
-          ...openedMixin(theme),
-          '& .MuiDrawer-paper': openedMixin(theme),
-        },
-      },
-      {
-        props: ({ open }) => !open,
-        style: {
-          ...closedMixin(theme),
-          '& .MuiDrawer-paper': closedMixin(theme),
-        },
-      },
-    ],
+    ...(open && {
+      ...openedMixin(theme),
+      '& .MuiDrawer-paper': openedMixin(theme),
+    }),
+    ...(!open && {
+      ...closedMixin(theme),
+      '& .MuiDrawer-paper': closedMixin(theme),
+    }),
   }),
 );
 
@@ -143,7 +130,6 @@ export default function MiniDrawer() {
       url: "brands",
       icon: "assets/navbar/brand.svg"
     },
-
   ]
 
   return (
@@ -159,7 +145,6 @@ export default function MiniDrawer() {
             sx={[
               {
                 marginRight: 5,
-
               },
               open && { display: 'none' },
             ]}
@@ -174,7 +159,6 @@ export default function MiniDrawer() {
               backgroundColor: "#7D1C4A",
               color: "#F4CCE9",
               borderRadius: "1rem"
-
             }
           }}>Logout <LogoutIcon /> </Button>
         </Toolbar>
@@ -186,7 +170,7 @@ export default function MiniDrawer() {
           </IconButton>
         </DrawerHeader>
 
-        <List >
+        <List>
           {links.map((text, index) => (
             <ListItem key={index} disablePadding sx={{ display: 'block' }}>
               <ListItemButton onClick={() => navigate(`${text.url}`)}
@@ -222,10 +206,7 @@ export default function MiniDrawer() {
                   fontSize: "1rem",
                   opacity: 1, // Logolar her zaman görünür
                   transition: "opacity 0.3s ease-in-out",
-
-                }}>
-
-                </Box>
+                }} />
                 <ListItemText
                   primary={text.title}
                   sx={[
@@ -242,12 +223,10 @@ export default function MiniDrawer() {
             </ListItem>
           ))}
         </List>
-
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Outlet />
-
       </Box>
     </Box>
   );
