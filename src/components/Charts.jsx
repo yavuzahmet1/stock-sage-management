@@ -18,12 +18,11 @@ const Charts = () => {
         date: new Date(sale.createdAt).toLocaleString(),
         amount: sale.amount
     }))
-    console.log(salesDate)
 
     return (
         <Card>
             <Grid2 container spacing={2} mt={3}>
-                <Grid2 item xs={12} md={6}>
+                <Grid2 item="true" >
                     <CardContent xs={12} md={6}
                         sx={{
                             boxShadow: 3,
@@ -49,7 +48,7 @@ const Charts = () => {
                         </AreaChart>
                     </CardContent>
                 </Grid2>
-                <Grid2 item xs={12} md={6}>
+                <Grid2 item="true" >
                     <CardContent xs={12} md={6}
                         sx={{
                             boxShadow: 3,
