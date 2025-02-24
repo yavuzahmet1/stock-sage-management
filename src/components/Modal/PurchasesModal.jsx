@@ -40,26 +40,30 @@ export default function PurchasesModal({ open, handleClose, selectedData }) {
             firmId: selectedData?.firmId || "",
             brandId: selectedData?.brandId || "",
             productId: selectedData?.productId || "",
-            name: selectedData?.name || "",
-            quantity: selectedData?.quantity || "",
-            price: selectedData?.price || ""
+            // name: selectedData?.name || "",
+            quantity: Number(selectedData?.quantity) || "",
+            price: Number(selectedData?.price) || ""
         });
     }, [selectedData]);
 
+    console.log("info", info)
     const handleChange = (e) => {
         setInfo({ ...info, [e.target.name]: e.target.value || "" });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (info.firmId) {
+        if (info._id) {
             updateStockData("purchases", info);
+
 
         } else {
             addStockData("purchases", info);
+
         }
         handleClose();
     };
+
 
     return (
         <div>

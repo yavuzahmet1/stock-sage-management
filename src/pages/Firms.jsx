@@ -42,6 +42,12 @@ const Firms = () => {
                     variant="contained"
                     color="success"
                     onClick={() => {
+                        setSelectedData({
+                            name: "",
+                            address: "",
+                            phone: "",
+                            image: ""
+                        })
                         setOpen(!open);
                         setCaption({
                             modalHeader: "Add Data",

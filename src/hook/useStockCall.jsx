@@ -42,12 +42,15 @@ const useStockCall = () => {
 
     const addStockData = async (url, info) => {
         dispatch(fetchStart())
+
         try {
             const { data } = await axiosWithToken.post(url, info)
             getStockData(url)
+
         } catch (error) {
             dispatch(fetchFail())
         }
+
 
     }
     const updateStockData = async (url, info) => {

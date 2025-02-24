@@ -12,20 +12,6 @@ const useAxios = () => {
         }
     })
 
-    // const getFirms = async () => {
-    //     dispatch(fetchStart())
-    //     try {
-    //         const { data } = await axios.get(`${BASE_URL}firms`, {
-    //             headers: {
-    //                 Authorization: `Token ${token}`
-    //             },
-    //         })
-    //         // console.log(data)
-    //         dispatch(firmSuccess(data))
-    //     } catch (error) {
-    //         dispatch(fetchFail())
-    //     }
-    // }
 
     return { axiosWithToken }
 }
