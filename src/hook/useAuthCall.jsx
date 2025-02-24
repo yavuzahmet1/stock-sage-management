@@ -22,7 +22,7 @@ const useAuthCall = () => {
         dispatch(fetchStart())
 
         try {
-            const { data } = await axios.post(`${BASE_URL}/users/`, userInfo)
+            const { data } = await axios.post(`${BASE_URL}users/`, userInfo)
             dispatch(registerSuccess(data))
             navigate("/stock");
 
