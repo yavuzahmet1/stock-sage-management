@@ -13,7 +13,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { Button, Box } from '@mui/material';
+import { Button, Box, useMediaQuery } from '@mui/material';
 import useAuthCall from "../hook/useAuthCall";
 import { useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
@@ -36,9 +36,9 @@ const closedMixin = (theme) => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `160px`,
+  width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up('sm')]: {
-    width: `160px`,
+    width: `calc(${theme.spacing(8)} + 1px)`,
   },
 });
 
@@ -86,10 +86,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function MiniDrawer() {
-  const navigate = useNavigate()
-  const { logout } = useAuthCall()
+  const navigate = useNavigate();
+  const { logout } = useAuthCall();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [open, setOpen] = React.useState(!isMobile);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -130,7 +131,7 @@ export default function MiniDrawer() {
       url: "brands",
       icon: "assets/navbar/brand.svg"
     },
-  ]
+  ];
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -151,7 +152,7 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h6" noWrap component="div" sx={{ fontSize: isMobile ? '1rem' : '1.25rem' }}>
             Stock Sage Management
           </Typography>
           <Button color="inherit" onClick={logout} sx={{
@@ -159,8 +160,11 @@ export default function MiniDrawer() {
               backgroundColor: "#7D1C4A",
               color: "#F4CCE9",
               borderRadius: "1rem"
-            }
-          }}>Logout <LogoutIcon /> </Button>
+            },
+            fontSize: isMobile ? '0.75rem' : '0.875rem',
+          }}>
+            Logout <LogoutIcon />
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -179,13 +183,12 @@ export default function MiniDrawer() {
                     minHeight: 48,
                     px: 2.5,
                     color: "secondary.main",
-                    fontSize: "3rem",
+                    fontSize: isMobile ? '1rem' : '1.25rem',
                     borderRadius: "1rem",
                     transition: "all 0.3s ease-in-out ",
                     "&:hover": {
                       backgroundColor: "secondary.second",
                       color: "white",
-                      fontSize: "3rem"
                     }
                   },
                   open
@@ -203,7 +206,6 @@ export default function MiniDrawer() {
                   mask: `url(${text.icon})`,
                   background: "red",
                   m: 2,
-                  fontSize: "1rem",
                   opacity: 1,
                   transition: "opacity 0.3s ease-in-out",
                 }} />
@@ -224,7 +226,7 @@ export default function MiniDrawer() {
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: isMobile ? 1 : 3 }}>
         <DrawerHeader />
         <Outlet />
       </Box>
