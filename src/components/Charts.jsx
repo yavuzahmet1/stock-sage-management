@@ -1,5 +1,4 @@
-import { Card, CardContent, Grid, Typography } from '@mui/material';
-import Grid2 from '@mui/material/Unstable_Grid2';
+import { Card, CardContent, Grid, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
 import {
     AreaChart,
@@ -12,67 +11,92 @@ import {
 } from 'recharts';
 
 const Charts = () => {
-    const { sales, purchases } = useSelector(state => state.stock)
+    const { sales, purchases } = useSelector(state => state.stock);
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const salesDate = sales.map(sale => ({
+    const salesData = sales.map(sale => ({
         date: new Date(sale.createdAt).toLocaleString(),
         amount: sale.amount
-    }))
+    }));
+
+    const purchasesData = purchases.map(purchase => ({
+        date: new Date(purchase.createdAt).toLocaleString(),
+        amount: purchase.amount
+    }));
 
     return (
-        <Card sx={{ display: "flex" }}>
-
-            <CardContent xs={12} md={6}
-                sx={{
-                    boxShadow: 3,
-                    borderRadius: 2,
-                    margin: 2,
-                    padding: 3,
-                }}
-            >
-                <Typography variant="h6">Sales</Typography>
-                <AreaChart width={675} height={300} data={sales}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="createdAt" />
-                    <YAxis dataKey={salesDate.amount} />
-                    <Tooltip />
-                    <Legend />
-                    <Area
-                        type="monotone"
-                        dataKey="amount"
-                        stroke="#8884d8"
-                        fill="#8884d8"
-                        fillOpacity={0.1}
-                    />
-                </AreaChart>
-            </CardContent>
-            <CardContent xs={12} md={6}
-                sx={{
-                    boxShadow: 3,
-                    borderRadius: 2,
-                    margin: 2,
-                    padding: 3,
-                }}
-            >
-                <Typography variant="h6">Purchases</Typography>
-                <AreaChart width={675} height={300} data={purchases}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="createdAt" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Area
-                        type="monotone"
-                        dataKey="amount"
-                        stroke="#82ca9d"
-                        fill="#82ca9d"
-                        fillOpacity={0.1}
-                    />
-                </AreaChart>
-            </CardContent>
-
-        </Card >
-    )
-}
+        <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+                <Card
+                    sx={{
+                        boxShadow: 3,
+                        borderRadius: 2,
+                        margin: 2,
+                        padding: 2,
+                    }}
+                >
+                    <CardContent>
+                        <Typography variant="h6" gutterBottom>
+                            Sales
+                        </Typography>
+                        <AreaChart
+                            width={isMobile ? 350 : 500}
+                            height={300}
+                            data={salesData}
+                        >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="date" />
+                            <YAxis dataKey="amount" />
+                            <Tooltip />
+                            <Legend />
+                            <Area
+                                type="monotone"
+                                dataKey="amount"
+                                stroke="#8884d8"
+                                fill="#8884d8"
+                                fillOpacity={0.1}
+                            />
+                        </AreaChart>
+                    </CardContent>
+                </Card>
+            </Grid>
+            <Grid item xs={12} md={6}>
+                <Card
+                    sx={{
+                        boxShadow: 3,
+                        borderRadius: 2,
+                        margin: 2,
+                        padding: 2,
+                    }}
+                >
+                    <CardContent>
+                        <Typography variant="h6" gutterBottom>
+                            Purchases
+                        </Typography>
+                        <AreaChart
+                            width={isMobile ? 350 : 500}
+                            height={300}
+                            data={purchasesData}
+                        >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="date" />
+                            <YAxis dataKey="amount" />
+                            <Tooltip />
+                            <Legend />
+                            <Area
+                                type="monotone"
+                                dataKey="amount"
+                                stroke="#82ca9d"
+                                fill="#82ca9d"
+                                fillOpacity={0.1}
+                            />
+                        </AreaChart>
+                    </CardContent>
+                </Card>
+            </Grid>
+        </Grid>
+    );
+};
 
 export default Charts;

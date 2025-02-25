@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useStockCall from "../../hook/useStockCall";
 import { GridToolbar } from "@mui/x-data-grid";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 const getRowId = (row) => {
     return row._id;
@@ -13,34 +14,36 @@ const getRowId = (row) => {
 export default function ProductsTable() {
     const { products } = useSelector((state) => state.stock);
     const { deleteStockData } = useStockCall();
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const columns = [
-        { field: "_id", headerName: "ID", width: 300 },
+        { field: "_id", headerName: "ID", width: isMobile ? 150 : 300 },
         {
             field: "categoryId",
             headerName: "Category",
-            width: 250,
+            width: isMobile ? 150 : 250,
             editable: true,
             valueGetter: (value) => value.name,
         },
         {
             field: "brandId",
             headerName: "Brand",
-            width: 250,
+            width: isMobile ? 150 : 250,
             editable: true,
             valueGetter: (value) => value.name,
         },
         {
             field: "name",
             headerName: "Product Name",
-            width: 250,
+            width: isMobile ? 150 : 250,
             editable: true,
         },
         {
             field: "quantity",
             headerName: "Stock",
             type: "number",
-            width: 175,
+            width: isMobile ? 100 : 175,
             editable: true,
         },
         {
@@ -50,9 +53,12 @@ export default function ProductsTable() {
             sortable: false,
             headerAlign: "center",
             align: "center",
-            width: 200,
+            width: isMobile ? 100 : 200,
             renderCell: (params) => (
-                <DeleteIcon onClick={() => deleteStockData("products", params.id)} />
+                <DeleteIcon
+                    onClick={() => deleteStockData("products", params.id)}
+                    style={{ cursor: "pointer" }}
+                />
             ),
         },
     ];
@@ -74,6 +80,15 @@ export default function ProductsTable() {
                 checkboxSelection
                 disableRowSelectionOnClick
                 slots={{ toolbar: GridToolbar }}
+                autoHeight
+                sx={{
+                    "& .MuiDataGrid-cell": {
+                        fontSize: isMobile ? "12px" : "14px",
+                    },
+                    "& .MuiDataGrid-columnHeader": {
+                        fontSize: isMobile ? "12px" : "14px",
+                    },
+                }}
             />
         </Box>
     );
